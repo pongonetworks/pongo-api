@@ -49,7 +49,7 @@
   ],
   "license": "MIT",
   "main": "dist/waves-api.min.js",
-  "name": "pongo-api",
+  "name": "@waves/waves-api",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pongonetworks/pongo-api.git"
