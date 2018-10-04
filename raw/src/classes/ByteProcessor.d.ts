@@ -1,5 +1,3 @@
-import { IMassTransferTransfers } from '../../interfaces';
-import BigNumber from '../libs/bignumber';
 export declare abstract class ByteProcessor {
     readonly name: string;
     constructor(name: string);
@@ -15,7 +13,7 @@ export declare class Byte extends ByteProcessor {
     process(value: number): Promise<Uint8Array>;
 }
 export declare class Long extends ByteProcessor {
-    process(value: number | string | BigNumber): Promise<Uint8Array>;
+    process(value: number): Promise<Uint8Array>;
 }
 export declare class StringWithLength extends ByteProcessor {
     process(value: string): Promise<Uint8Array>;
@@ -37,7 +35,4 @@ export declare class OrderType extends ByteProcessor {
 }
 export declare class Recipient extends ByteProcessor {
     process(value: string): Promise<Uint8Array>;
-}
-export declare class Transfers extends ByteProcessor {
-    process(values: IMassTransferTransfers[]): Promise<Uint8Array>;
 }

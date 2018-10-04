@@ -6,7 +6,7 @@ function concatUint8Arrays() {
         args[_i] = arguments[_i];
     }
     if (args.length < 2) {
-        return args[0];
+        throw new Error('Two or more Uint8Array are expected');
     }
     if (!(args.every(function (arg) { return arg instanceof Uint8Array; }))) {
         throw new Error('One of arguments is not a Uint8Array');

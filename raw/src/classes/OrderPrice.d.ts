@@ -32,7 +32,7 @@ export default class OrderPrice implements IOrderPrice {
     static fromTokens(tokens: any, pair: IAssetPair | IAsset | string, secondAsset?: IAsset | string): Promise<IOrderPrice>;
     static fromMatcherCoins(coins: any, pair: IAssetPair | IAsset | string, secondAsset?: IAsset | string): Promise<IOrderPrice>;
     static isOrderPrice(object: any): boolean;
-    private static _checkAmount(amount);
-    private static _getPair(pair, secondAsset);
-    private static _getMatcherDivider(precision);
+    private static _checkAmount;
+    private static _getPair;
+    private static _getMatcherDivider;
 }

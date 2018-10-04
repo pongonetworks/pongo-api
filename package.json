@@ -9,12 +9,12 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "bignumber.js": "4.1.0",
-    "crypto-js": "3.1.9-1",
-    "node-fetch": "1.7.3",
+    "bignumber.js": "^4.1.0",
+    "crypto-js": "^3.1.9-1",
+    "node-fetch": "^1.7.3",
     "parse-json-bignumber": "0.0.2",
-    "ts-api-validator": "2.1.2",
-    "ts-utils": "6.0.1"
+    "ts-api-validator": "^2.1.0",
+    "ts-utils": "^6.0.0"
   },
   "deprecated": false,
   "description": "Waves client-side API library",
@@ -40,7 +40,6 @@
   "keywords": [
     "cryptocurrency",
     "waves",
-     "pongonetworks",
     "api",
     "seed",
     "transactions",
@@ -65,5 +64,5 @@
     "uglifyjs": "uglifyjs ./dist/waves-api.js -o ./dist/waves-api.min.js && node_modules/.bin/uglifyjs ./dist/waves-api.partial.js -o ./dist/waves-api.partial.min.js"
   },
   "types": "raw/src/WavesAPI.d.ts",
-  "version": "0.30.1"
+  "version": "0.37.0"
 }

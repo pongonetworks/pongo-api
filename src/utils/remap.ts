@@ -19,7 +19,7 @@ export function denormalizeAssetId(original) {
     }
 }
 
-export function removeRecipientPrefix(original: string) {
+export function removeRecipientPrefix(original) {
     if (original.slice(0, 8) === 'address:') {
         return original.slice(8);
     } else {
@@ -27,20 +27,11 @@ export function removeRecipientPrefix(original: string) {
     }
 }
 
-export function removeAliasPrefix(original: string) {
+export function removeAliasPrefix(original) {
     if (original.slice(0, 6) === 'alias:') {
         return original.slice(8); // Mind the network byte characters
     } else {
         return original;
-    }
-}
-
-export function addRecipientPrefix(raw: string) {
-    if (raw.length > 30) {
-        return `address:${raw}`;
-    } else {
-        const networkCharacter = String.fromCharCode(config.getNetworkByte());
-        return `alias:${networkCharacter}:${raw}`;
     }
 }
 

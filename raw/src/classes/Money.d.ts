@@ -51,12 +51,12 @@ export default class Money implements IMoney {
         tokens: string;
     };
     toString(): string;
-    private _matchAssets(money);
+    private _matchAssets;
     static fromCoins(coins: any, supposedAsset: any): Promise<IMoney>;
     static fromTokens(tokens: any, supposedAsset: any): Promise<IMoney>;
     static convert(money: IMoney, asset: IAsset, exchangeRate: BigNumber | string): IMoney;
     static isMoney(object: any): boolean;
-    private static _checkAmount(amount);
-    private static _tokensToCoins(tokens, precision);
-    private static _getDivider(precision);
+    private static _checkAmount;
+    private static _tokensToCoins;
+    private static _getDivider;
 }

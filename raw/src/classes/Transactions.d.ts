@@ -16,7 +16,6 @@ declare const _default: {
     LeaseTransaction: ITransactionClassConstructor;
     CancelLeasingTransaction: ITransactionClassConstructor;
     CreateAliasTransaction: ITransactionClassConstructor;
-    MassTransferTransaction: ITransactionClassConstructor;
     Order: ITransactionClassConstructor;
     createSignableData(fields: (number | ByteProcessor)[]): ITransactionClassConstructor;
 };

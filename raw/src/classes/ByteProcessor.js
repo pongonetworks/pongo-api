@@ -10,7 +10,6 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var bignumber_1 = require("../libs/bignumber");
 var base58_1 = require("../libs/base58");
 var convert_1 = require("../utils/convert");
 var concat_1 = require("../utils/concat");
@@ -80,16 +79,7 @@ var Long = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Long.prototype.process = function (value) {
-        var bytes;
-        if (typeof value === 'number') {
-            bytes = convert_1.default.longToByteArray(value);
-        }
-        else {
-            if (typeof value === 'string') {
-                value = new bignumber_1.default(value);
-            }
-            bytes = convert_1.default.bigNumberToByteArray(value);
-        }
+        var bytes = convert_1.default.longToByteArray(value);
         return Promise.resolve(Uint8Array.from(bytes));
     };
     return Long;
@@ -202,26 +192,4 @@ var Recipient = /** @class */ (function (_super) {
     return Recipient;
 }(ByteProcessor));
 exports.Recipient = Recipient;
-var Transfers = /** @class */ (function (_super) {
-    __extends(Transfers, _super);
-    function Transfers() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Transfers.prototype.process = function (values) {
-        var recipientProcessor = new Recipient('serviceInstance');
-        var amountProcessor = new Long('serviceInstance');
-        var promises = [];
-        for (var i = 0; i < values.length; i++) {
-            promises.push(recipientProcessor.process(values[i].recipient));
-            promises.push(amountProcessor.process(values[i].amount));
-        }
-        return Promise.all(promises).then(function (elements) {
-            var length = convert_1.default.shortToByteArray(values.length);
-            var lengthBytes = Uint8Array.from(length);
-            return concat_1.concatUint8Arrays.apply(void 0, [lengthBytes].concat(elements));
-        });
-    };
-    return Transfers;
-}(ByteProcessor));
-exports.Transfers = Transfers;
 //# sourceMappingURL=ByteProcessor.js.map

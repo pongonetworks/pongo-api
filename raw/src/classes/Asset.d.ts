@@ -22,6 +22,6 @@ export default class Asset implements IAsset {
     static getKnownAssetsList(): Promise<any[]>;
     static clearCache(): Promise<void>;
     static isAsset(object: any): boolean;
-    private static _factory(assetId);
-    private static _defaultFactory(assetId);
+    private static _factory;
+    private static _defaultFactory;
 }

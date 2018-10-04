@@ -3,7 +3,7 @@ import { IAssetObject, IWavesBasicConfig, IWavesConfig } from '../interfaces';
 
 export const WAVES = 'PONGO';
 export const WAVES_PROPS: IAssetObject = {
-    id: PONGO,
+    id: WAVES,
     name: 'Pongo',
     precision: 8,
     description: ''
@@ -26,8 +26,6 @@ export const LEASE_TX = 8;
 export const CANCEL_LEASING_TX = 9;
 export const CREATE_ALIAS_TX = 10;
 export const MASS_TRANSFER_TX = 11;
-
-export const MASS_TRANSFER_TX_VERSION = 1;
 
 export const ISSUE_TX_NAME = 'issue';
 export const TRANSFER_TX_NAME = 'transfer';
@@ -71,7 +69,7 @@ export const DEFAULT_TESTNET_CONFIG: IWavesConfig = {
     ...DEFAULT_BASIC_CONFIG,
     networkByte: TESTNET_BYTE,
     nodeAddress: 'https://node.pongo.online',
-    matcherAddress: 'http://node.pongo.online:6866'
+    matcherAddress: 'https://node.pongo.online/matcher'
 };
 
 export const WAVES_V1_ISSUE_TX = {
@@ -81,7 +79,7 @@ export const WAVES_V1_ISSUE_TX = {
     fee: 0,
     height: 0,
     id: WAVES,
-    name: 'Waves',
+    name: 'Pongo',
     quantity: 100000000 * Math.pow(10, 8),
     reissuable: false,
     sender: WAVES,

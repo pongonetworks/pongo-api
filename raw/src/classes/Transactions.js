@@ -10,10 +10,10 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ByteProcessor_1 = require("./ByteProcessor");
 var concat_1 = require("../utils/concat");
-var remap_1 = require("../utils/remap");
 var crypto_1 = require("../utils/crypto");
 var base58_1 = require("../libs/base58");
 var constants = require("../constants");
+var config_1 = require("../config");
 function createTransactionClass(txType, fields, apiSchema) {
     if (!fields || !fields.length) {
         throw new Error('It is not possible to create TransactionClass without fields');
@@ -30,7 +30,7 @@ function createTransactionClass(txType, fields, apiSchema) {
             byteProviders.push(function (data) { return field.process(data[field.name]); });
         }
         else if (typeof field === 'number') {
-            // All static integers from 0 to 255 are converted to bytes as well
+            // All static data must be converted to bytes as well
             byteProviders.push(Uint8Array.from([field]));
         }
         else {
@@ -63,8 +63,7 @@ function createTransactionClass(txType, fields, apiSchema) {
             // Sign data and extend its object with signature and transaction type
             return this.getSignature(privateKey).then(function (signature) {
                 // Transform data so it could match the API requirements
-                return _this._castToAPISchema(_this._rawData).then(function (schemedData) { return (__assign({}, (txType ? { transactionType: txType } : {}), schemedData, (txType !== constants.MASS_TRANSFER_TX_NAME ? { signature: signature } : { proofs: [signature] }) // TODO
-                )); });
+                return _this._castToAPISchema(_this._rawData).then(function (schemedData) { return (__assign({}, (txType ? { transactionType: txType } : {}), schemedData, { signature: signature })); });
             });
         };
         // Sign transaction and return only signature
@@ -104,25 +103,8 @@ function createTransactionClass(txType, fields, apiSchema) {
                     return _this._castFromBytesToBase58(key);
                 }
                 if (rule.from === 'raw' && rule.to === 'prefixed') {
-                    if (!rule.path) {
-                        return _this._castFromRawToPrefixed(key);
-                    }
-                    else {
-                        return Promise.resolve((_a = {},
-                            _a[key] = _this._rawData[key].reduce(function (result, obj) {
-                                result.push(Object.assign(obj, (_a = {}, _a[rule.path] = remap_1.addRecipientPrefix(obj[rule.path]), _a)));
-                                return result;
-                                var _a;
-                            }, []),
-                            _a));
-                    }
+                    return _this._castFromRawToPrefixed(key);
                 }
-                if (rule.from === 'none' && typeof rule.to === 'function') {
-                    return Promise.resolve((_b = {},
-                        _b[key] = rule.to(),
-                        _b));
-                }
-                var _a, _b;
             });
             return Promise.all(transforms).then(function (schemedParts) {
                 return schemedParts.reduce(function (result, part) {
@@ -132,16 +114,31 @@ function createTransactionClass(txType, fields, apiSchema) {
         };
         TransactionClass.prototype._castFromBytesToBase58 = function (key) {
             return this.getExactBytes(key).then(function (bytes) {
+                var _a;
                 if (key === 'attachment') {
                     bytes = Uint8Array.from(Array.prototype.slice.call(bytes, 2));
                 }
                 return _a = {}, _a[key] = base58_1.default.encode(bytes), _a;
-                var _a;
             });
         };
         TransactionClass.prototype._castFromRawToPrefixed = function (key) {
-            return Promise.resolve((_a = {}, _a[key] = remap_1.addRecipientPrefix(this._rawData[key]), _a));
             var _a;
+            var type = key;
+            if (type === 'recipient') {
+                type = this._rawData[key].length <= 30 ? 'alias' : 'address';
+            }
+            var prefix;
+            if (type === 'address') {
+                prefix = 'address:';
+            }
+            else if (type === 'alias') {
+                var networkCharacter = String.fromCharCode(config_1.default.getNetworkByte());
+                prefix = 'alias:' + networkCharacter + ':';
+            }
+            else {
+                throw new Error("There is no type '" + type + "' to be prefixed");
+            }
+            return Promise.resolve((_a = {}, _a[key] = prefix + this._rawData[key], _a));
         };
         return TransactionClass;
     }());
@@ -223,34 +220,6 @@ exports.default = {
         new ByteProcessor_1.Long('fee'),
         new ByteProcessor_1.Long('timestamp')
     ]),
-    MassTransferTransaction: createTransactionClass(constants.MASS_TRANSFER_TX_NAME, [
-        constants.MASS_TRANSFER_TX,
-        constants.MASS_TRANSFER_TX_VERSION,
-        new ByteProcessor_1.Base58('senderPublicKey'),
-        new ByteProcessor_1.AssetId('assetId'),
-        new ByteProcessor_1.Transfers('transfers'),
-        new ByteProcessor_1.Long('timestamp'),
-        new ByteProcessor_1.Long('fee'),
-        new ByteProcessor_1.Attachment('attachment')
-    ], {
-        attachment: {
-            from: 'bytes',
-            to: 'base58'
-        },
-        transfers: {
-            from: 'raw',
-            to: 'prefixed',
-            path: 'recipient'
-        },
-        type: {
-            from: 'none',
-            to: function () { return constants.MASS_TRANSFER_TX; }
-        },
-        version: {
-            from: 'none',
-            to: function () { return constants.MASS_TRANSFER_TX_VERSION; }
-        }
-    }),
     // That's not exactly a transaction so it has no type
     Order: createTransactionClass(null, [
         new ByteProcessor_1.Base58('senderPublicKey'),
