@@ -6,10 +6,10 @@ export interface IFetchWrapper<T> {
 }
 export declare const enum PRODUCTS {
     NODE = 0,
-    MATCHER = 1,
+    MATCHER = 1
 }
 export declare const enum VERSIONS {
-    V1 = 0,
+    V1 = 0
 }
 export declare const POST_TEMPLATE: {
     method: string;

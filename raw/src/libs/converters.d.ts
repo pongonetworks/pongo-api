@@ -31,10 +31,28 @@ declare let converters: {
     byteArrayToShortArray: (byteArray: any) => number[];
     shortArrayToByteArray: (shortArray: any) => number[];
     shortArrayToHexString: (ary: any) => string;
+    /**
+     * Produces an array of the specified number of bytes to represent the integer
+     * value. Default output encodes ints in little endian format. Handles signed
+     * as well as unsigned integers. Due to limitations in JavaScript's number
+     * format, x cannot be a true 64 bit integer (8 bytes).
+     */
     intToBytes_: (x: any, numBytes: any, unsignedMax: any, opt_bigEndian: any) => any[];
     int32ToBytes: (x: any, opt_bigEndian: any) => any[];
     int16ToBytes: (x: any, opt_bigEndian: any) => any[];
+    /**
+     * Based on https://groups.google.com/d/msg/crypto-js/TOb92tcJlU0/Eq7VZ5tpi-QJ
+     * Converts a word array to a Uint8Array.
+     * @param {WordArray} wordArray The word array.
+     * @return {Uint8Array} The Uint8Array.
+     */
     wordArrayToByteArrayEx: (wordArray: any) => Uint8Array;
+    /**
+     * Converts a Uint8Array to a word array.
+     * @param {string} u8Str The Uint8Array.
+     * @return {WordArray} The word array.
+     */
     byteArrayToWordArrayEx: (u8arr: any) => any;
 };
+/** END OF THE LICENSED CODE */
 export default converters;

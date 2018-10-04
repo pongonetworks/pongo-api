@@ -38,16 +38,6 @@ function removeAliasPrefix(original) {
     }
 }
 exports.removeAliasPrefix = removeAliasPrefix;
-function addRecipientPrefix(raw) {
-    if (raw.length > 30) {
-        return "address:" + raw;
-    }
-    else {
-        var networkCharacter = String.fromCharCode(config_1.default.getNetworkByte());
-        return "alias:" + networkCharacter + ":" + raw;
-    }
-}
-exports.addRecipientPrefix = addRecipientPrefix;
 // Adjusts user time to UTC
 // Should be used for creating transactions and requests only
 function getTimestamp(timestamp) {

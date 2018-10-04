@@ -255,7 +255,7 @@ exports.blake2bInit = blake2bInit;
 // Requires hash context and Uint8Array (byte array)
 function blake2bUpdate(ctx, input) {
     for (var i = 0; i < input.length; i++) {
-        if (ctx.c === 128) {
+        if (ctx.c === 128) { // buffer full ?
             ctx.t += ctx.c; // add counters
             blake2bCompress(ctx, false); // compress (not last)
             ctx.c = 0; // counter to zero
@@ -268,7 +268,7 @@ exports.blake2bUpdate = blake2bUpdate;
 // Returns a Uint8Array containing the message digest
 function blake2bFinal(ctx) {
     ctx.t += ctx.c; // mark last block offset
-    while (ctx.c < 128) {
+    while (ctx.c < 128) { // fill up with zeros
         ctx.b[ctx.c++] = 0;
     }
     blake2bCompress(ctx, true); // final block flag = 1

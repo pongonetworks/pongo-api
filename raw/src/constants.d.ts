@@ -1,5 +1,5 @@
 import { IAssetObject, IWavesBasicConfig, IWavesConfig } from '../interfaces';
-export declare const WAVES = "WAVES";
+export declare const WAVES = "PONGO";
 export declare const WAVES_PROPS: IAssetObject;
 export declare const MAINNET_BYTE: number;
 export declare const TESTNET_BYTE: number;
@@ -15,7 +15,6 @@ export declare const LEASE_TX = 8;
 export declare const CANCEL_LEASING_TX = 9;
 export declare const CREATE_ALIAS_TX = 10;
 export declare const MASS_TRANSFER_TX = 11;
-export declare const MASS_TRANSFER_TX_VERSION = 1;
 export declare const ISSUE_TX_NAME = "issue";
 export declare const TRANSFER_TX_NAME = "transfer";
 export declare const REISSUE_TX_NAME = "reissue";

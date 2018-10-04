@@ -9,7 +9,6 @@ function compareBytes(bytes: Uint8Array, expectedArray: Array<number>) {
 
 
 let Waves;
-let BigNumber;
 
 let Base58;
 let Bool;
@@ -25,7 +24,6 @@ describe('ByteProcessor', () => {
     beforeEach(() => {
 
         Waves = WavesAPI.create(WavesAPI.TESTNET_CONFIG);
-        BigNumber = WavesAPI.BigNumber;
 
         Base58 = Waves.byteProcessors.Base58;
         Bool = Waves.byteProcessors.Bool;
@@ -111,7 +109,7 @@ describe('ByteProcessor', () => {
             processor = new Long('long');
         });
 
-        it('should convert a long value to bytes (from number)', (done) => {
+        it('should convert a long value to bytes', (done) => {
             Promise.all([
                 processor.process(0).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 0])),
                 processor.process(255).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 255])),
@@ -121,27 +119,7 @@ describe('ByteProcessor', () => {
             ]).then(() => done());
         });
 
-        it('should convert a long value to bytes (from string)', (done) => {
-            Promise.all([
-                processor.process('0').then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 0])),
-                processor.process('255').then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 255])),
-                processor.process('256').then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 1, 0])),
-                processor.process('144125').then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 2, 50, 253])),
-                processor.process('12141209481023').then((bytes) => compareBytes(bytes, [0, 0, 11, 10, 216, 122, 111, 63]))
-            ]).then(() => done());
-        });
-
-        it('should convert a long value to bytes (from BigNumber)', (done) => {
-            Promise.all([
-                processor.process(new BigNumber(0)).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 0])),
-                processor.process(new BigNumber(255)).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 0, 255])),
-                processor.process(new BigNumber(256)).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 0, 1, 0])),
-                processor.process(new BigNumber(144125)).then((bytes) => compareBytes(bytes, [0, 0, 0, 0, 0, 2, 50, 253])),
-                processor.process(new BigNumber(12141209481023)).then((bytes) => compareBytes(bytes, [0, 0, 11, 10, 216, 122, 111, 63]))
-            ]).then(() => done());
-        });
-
-        it('should throw when given not a number or BigNumber value', () => {
+        it('should throw when given not a long value', () => {
             expect(() => processor.process('')).to.throw();
             expect(() => processor.process(true)).to.throw();
             expect(() => processor.process(null)).to.throw();

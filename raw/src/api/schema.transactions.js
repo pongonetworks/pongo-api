@@ -24,10 +24,6 @@ var getTxCommonFields = function (typeName, wavesFeeOnly) { return ({
         type: ts_api_validator_1.StringPart,
         required: true
     },
-    version: {
-        type: ts_api_validator_1.NumberPart
-        // TODO : required (later, when it's stable)
-    },
     senderPublicKey: {
         type: ts_api_validator_1.StringPart,
         required: true
@@ -49,7 +45,7 @@ var getTxCommonFields = function (typeName, wavesFeeOnly) { return ({
     },
     height: {
         type: ts_api_validator_1.NumberPart
-        // TODO : required (later, when it's stable)
+        // TODO : make it required in the new API
     },
     timestamp: {
         type: ts_api_validator_1.DatePart,
@@ -85,10 +81,6 @@ var getTxAssetId = function (path) { return ({
 var getTxAssetName = function () { return ({
     type: ts_api_validator_1.StringPart,
     required: true
-}); };
-var getTxChainId = function () { return ({
-    type: ts_api_validator_1.NumberPart
-    // TODO : required (later, when it's stable)
 }); };
 var getTxAssetDescription = function () { return ({
     type: ts_api_validator_1.StringPart,
@@ -211,7 +203,7 @@ var getTxOrder = function (path) { return ({
 exports.issueTransactionSchema = new ts_api_validator_1.Schema({
     type: ts_api_validator_1.ObjectPart,
     required: true,
-    content: __assign({}, getTxCommonFields(constants.ISSUE_TX_NAME, true), { assetId: getTxAssetId('id'), name: getTxAssetName(), description: getTxAssetDescription(), precision: getTxAssetPrecision(), quantity: getTxAssetTotalAmount('quantity', 'assetId'), reissuable: getTxAssetReissuable() })
+    content: __assign({}, getTxCommonFields(constants.ISSUE_TX_NAME, true), { assetId: getTxAssetId(), name: getTxAssetName(), description: getTxAssetDescription(), precision: getTxAssetPrecision(), quantity: getTxAssetTotalAmount('quantity', 'assetId'), reissuable: getTxAssetReissuable() })
 });
 exports.transferTransactionSchema = new ts_api_validator_1.Schema({
     type: ts_api_validator_1.ObjectPart,
@@ -221,12 +213,12 @@ exports.transferTransactionSchema = new ts_api_validator_1.Schema({
 exports.reissueTransactionSchema = new ts_api_validator_1.Schema({
     type: ts_api_validator_1.ObjectPart,
     required: true,
-    content: __assign({}, getTxCommonFields(constants.REISSUE_TX_NAME, true), { assetId: getTxAssetId(), chainId: getTxChainId(), quantity: getTxAssetTotalAmount('quantity', 'assetId'), reissuable: getTxAssetReissuable() })
+    content: __assign({}, getTxCommonFields(constants.REISSUE_TX_NAME, true), { assetId: getTxAssetId(), quantity: getTxAssetTotalAmount('quantity', 'assetId'), reissuable: getTxAssetReissuable() })
 });
 exports.burnTransactionSchema = new ts_api_validator_1.Schema({
     type: ts_api_validator_1.ObjectPart,
     required: true,
-    content: __assign({}, getTxCommonFields(constants.BURN_TX_NAME, true), { assetId: getTxAssetId(), chainId: getTxChainId(), quantity: getTxAssetTotalAmount('amount', 'assetId') })
+    content: __assign({}, getTxCommonFields(constants.BURN_TX_NAME, true), { assetId: getTxAssetId(), quantity: getTxAssetTotalAmount('amount', 'assetId') })
 });
 exports.exchangeTransactionSchema = new ts_api_validator_1.Schema({
     type: ts_api_validator_1.ObjectPart,

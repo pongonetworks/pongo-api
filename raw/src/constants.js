@@ -8,15 +8,15 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WAVES = 'WAVES';
+exports.WAVES = 'PONGO';
 exports.WAVES_PROPS = {
     id: exports.WAVES,
-    name: 'Waves',
+    name: 'Pongo',
     precision: 8,
     description: ''
 };
 exports.MAINNET_BYTE = 'W'.charCodeAt(0);
-exports.TESTNET_BYTE = 'T'.charCodeAt(0);
+exports.TESTNET_BYTE = 'L'.charCodeAt(0);
 exports.INITIAL_NONCE = 0;
 exports.ADDRESS_VERSION = 1;
 exports.ALIAS_VERSION = 2;
@@ -29,7 +29,6 @@ exports.LEASE_TX = 8;
 exports.CANCEL_LEASING_TX = 9;
 exports.CREATE_ALIAS_TX = 10;
 exports.MASS_TRANSFER_TX = 11;
-exports.MASS_TRANSFER_TX_VERSION = 1;
 exports.ISSUE_TX_NAME = 'issue';
 exports.TRANSFER_TX_NAME = 'transfer';
 exports.REISSUE_TX_NAME = 'reissue';
@@ -55,7 +54,7 @@ exports.DEFAULT_BASIC_CONFIG = {
     timeDiff: 0
 };
 exports.DEFAULT_MAINNET_CONFIG = __assign({}, exports.DEFAULT_BASIC_CONFIG, { networkByte: exports.MAINNET_BYTE, nodeAddress: 'https://nodes.wavesplatform.com', matcherAddress: 'https://matcher.wavesplatform.com' });
-exports.DEFAULT_TESTNET_CONFIG = __assign({}, exports.DEFAULT_BASIC_CONFIG, { networkByte: exports.TESTNET_BYTE, nodeAddress: 'https://testnet1.wavesnodes.com', matcherAddress: 'https://testnet1.wavesnodes.com/matcher' });
+exports.DEFAULT_TESTNET_CONFIG = __assign({}, exports.DEFAULT_BASIC_CONFIG, { networkByte: exports.TESTNET_BYTE, nodeAddress: 'https://node.pongo.online', matcherAddress: 'https://node.pongo.online/matcher' });
 exports.WAVES_V1_ISSUE_TX = {
     assetId: exports.WAVES,
     decimals: 8,
@@ -63,7 +62,7 @@ exports.WAVES_V1_ISSUE_TX = {
     fee: 0,
     height: 0,
     id: exports.WAVES,
-    name: 'Waves',
+    name: 'Pongo',
     quantity: 100000000 * Math.pow(10, 8),
     reissuable: false,
     sender: exports.WAVES,
